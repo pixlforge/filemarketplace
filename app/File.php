@@ -82,13 +82,69 @@ class File extends Model
     }
 
     /**
-     * Field to use as routing key.
+     * Attribute to use as routing key.
      *
      * @return string
      */
     public function getRouteKeyName()
     {
         return 'identifier';
+    }
+
+    /**
+     * Merge all updated approval properties with the File model.
+     */
+    public function mergeApprovalProperties()
+    {
+        $this->update(
+            $this->approvals->first()->only(File::APPROVAL_PROPERTIES)
+        );
+    }
+
+    /**
+     * Delete all approvals.
+     */
+    public function deleteAllApprovals()
+    {
+        $this->approvals()->delete();
+    }
+
+    /**
+     * Approve the file.
+     */
+    public function approve()
+    {
+        $this->updateToBeVisible();
+        $this->approveAllUploads();
+    }
+
+    /**
+     * Set the file as approved and live.
+     */
+    public function updateToBeVisible()
+    {
+        $this->update([
+            'live' => true,
+            'approved' => true
+        ]);
+    }
+
+    /**
+     * Set all uploads related to the file as approved.
+     */
+    public function approveAllUploads()
+    {
+        $this->uploads()->update([
+            'approved' => true
+        ]);
+    }
+
+    /**
+     * Delete all unapproved uploads.
+     */
+    public function deleteUnapprovedUploads()
+    {
+        $this->uploads()->unapproved()->delete();
     }
 
     /**
@@ -166,7 +222,17 @@ class File extends Model
      */
     public function setLiveAttribute($value)
     {
-        $this->attributes['live'] = $value === 'on' ? true : false;
+        if ($value === 'on') {
+            $this->attributes['live'] = true;
+        }
+
+        if ($value === 'true' || $value === true) {
+            $this->attributes['live'] = true;
+        }
+
+        if ($value === 'false' || $value === false) {
+            $this->attributes['live'] = false;
+        }
     }
 
     /**

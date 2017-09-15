@@ -19,13 +19,11 @@
                    onclick="event.preventDefault(); document.getElementById('logout').submit();">
                     Sign out
                 </a>
-
                 <a href="{{ route('account') }}" class="nav-item">
                     {{ auth()->user()->name }}
                 </a>
-
                 @admin
-                    <a href="#" class="nav-item">
+                    <a href="{{ route('admin.index') }}" class="nav-item">
                         Admin
                     </a>
                 @endadmin
