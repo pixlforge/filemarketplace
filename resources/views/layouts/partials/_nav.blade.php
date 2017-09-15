@@ -23,6 +23,12 @@
                 <a href="{{ route('account') }}" class="nav-item">
                     {{ auth()->user()->name }}
                 </a>
+
+                @admin
+                    <a href="#" class="nav-item">
+                        Admin
+                    </a>
+                @endadmin
             @else
                 <a href="{{ route('login') }}" class="nav-item">
                     Sign in
