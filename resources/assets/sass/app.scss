@@ -1,9 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300');
 
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import "node_modules/bulma/bulma";
+@import "node_modules/dropzone/src/dropzone.scss";
 
-// Variables
 @import "variables";
-
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "_typography.scss";
