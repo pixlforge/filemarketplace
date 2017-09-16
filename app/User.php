@@ -51,6 +51,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * Checks wether the authenticated user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isTheSameAs(User $user)
+    {
+        return $this->id === $user->id;
+    }
+
+    /**
      * Relation to File.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

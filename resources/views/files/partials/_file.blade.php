@@ -3,7 +3,7 @@
         <div class="content">
             <p>
                 <strong>
-                    <a href="#" class="is-capitalized">{{ $file->title }}</a>
+                    <a href="{{ route('files.show', $file) }}" class="is-capitalized">{{ $file->title }}</a>
                 </strong>
                 <br>
                 {{ $file->overview_short }}

@@ -92,6 +92,8 @@ class FilesController extends Controller
         if ($file->needsApproval($approvalProperties)) {
             $file->createApproval($approvalProperties);
 
+            $file->unlive();
+
             return back()->withSuccess('Changes applied successfully! The changes have been submitted for approval and will be reviewed shortly.');
         }
 

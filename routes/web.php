@@ -13,10 +13,7 @@ Auth::routes();
 /**
  * Account
  */
-Route::prefix('/account')
-    ->namespace('Account')
-    ->middleware('auth')
-    ->group(function () {
+Route::prefix('/account')->namespace('Account')->middleware('auth')->group(function () {
     Route::get('/', 'AccountController@index')->name('account');
 
     /**
@@ -35,11 +32,9 @@ Route::prefix('/account')
 /**
  * Admin
  */
-Route::prefix('/admin')
-    ->namespace('Admin')
-    ->middleware(['auth', 'admin'])
-    ->group(function () {
+Route::prefix('/admin')->namespace('Admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
+    Route::get('/{file}', 'FileController@show')->name('admin.files.show');
 
     /**
      * File New
@@ -69,3 +64,5 @@ Route::prefix('/admin')
  */
 Route::post('/{file}/upload', 'Upload\UploadController@store')->name('upload.store');
 Route::delete('/{file}/upload/{upload}', 'Upload\UploadController@destroy')->name('upload.destroy');
+
+Route::get('/{file}', 'Files\FileController@show')->name('files.show');

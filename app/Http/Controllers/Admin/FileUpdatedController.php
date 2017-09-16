@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Files\FileUpdatesApproved;
+use App\Mail\Files\FileUpdatesRejected;
 
 class FileUpdatedController extends Controller
 {
@@ -35,6 +38,8 @@ class FileUpdatedController extends Controller
         $file->deleteAllApprovals();
         $file->updateToBeVisible();
 
+        Mail::to($file->user)->queue(new FileUpdatesApproved($file));
+
         return back()->withSuccess("The file {$file->title} changes have been approved.");
     }
 
@@ -48,7 +53,9 @@ class FileUpdatedController extends Controller
     {
         $file->deleteAllApprovals();
         $file->deleteUnapprovedUploads();
-        
+
+        Mail::to($file->user)->queue(new FileUpdatesRejected($file));
+
         return back()->withSuccess("The file {$file->title} changes have been rejected");
     }
 }

@@ -60,7 +60,8 @@ class File extends Model
      * Cast fields into specific types.
      */
     protected $casts = [
-        'live' => 'boolean'
+        'live' => 'boolean',
+        'approved' => 'boolean'
     ];
 
     const APPROVAL_PROPERTIES = [
@@ -68,6 +69,26 @@ class File extends Model
         'overview_short',
         'overview'
     ];
+
+    /**
+     * Live attribute mutator.
+     *
+     * @param $value
+     */
+    public function setLiveAttribute($value)
+    {
+        if ($value === 'on') {
+            $this->attributes['live'] = true;
+        }
+
+        if ($value === 'true' || $value === true) {
+            $this->attributes['live'] = true;
+        }
+
+        if ($value === 'false' || $value === false) {
+            $this->attributes['live'] = false;
+        }
+    }
 
     /**
      * Model boot method.
@@ -89,6 +110,24 @@ class File extends Model
     public function getRouteKeyName()
     {
         return 'identifier';
+    }
+
+    /**
+     * Checks wether the file should be visible to the user.
+     *
+     * @return bool
+     */
+    public function visible()
+    {
+        if (auth()->user()->isAdmin()) {
+            return true;
+        }
+
+        if (auth()->user()->isTheSameAs($this->user)) {
+            return true;
+        }
+
+        return $this->isApproved() && $this->isLive();
     }
 
     /**
@@ -174,7 +213,27 @@ class File extends Model
      */
     public function isLive()
     {
-        return $this->live === true;
+        return $this->live;
+    }
+
+    /**
+     * Set the file as not live nor approved.
+     */
+    public function unlive()
+    {
+        $this->update([
+            'live' => false
+        ]);
+    }
+
+    /**
+     * Checks wether the file is approved.
+     *
+     * @return bool
+     */
+    public function isApproved()
+    {
+        return $this->approved;
     }
 
     /**
@@ -213,26 +272,6 @@ class File extends Model
     protected function currentPropertiesDifferToGiven($properties = [])
     {
         return array_only($this->toArray(), self::APPROVAL_PROPERTIES) !== $properties;
-    }
-
-    /**
-     * Live attribute mutator.
-     *
-     * @param $value
-     */
-    public function setLiveAttribute($value)
-    {
-        if ($value === 'on') {
-            $this->attributes['live'] = true;
-        }
-
-        if ($value === 'true' || $value === true) {
-            $this->attributes['live'] = true;
-        }
-
-        if ($value === 'false' || $value === false) {
-            $this->attributes['live'] = false;
-        }
     }
 
     /**
