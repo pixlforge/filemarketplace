@@ -11,9 +11,17 @@
                 <h2 class="subtitle">
                     {{ $file->overview_short }}
                 </h2>
+
+                @if ($file->isFree())
+                    @include ('files.partials._checkout_form_free', compact('file'))
+                @endif
+
             </div>
         </div>
     </section>
+
+    @include ('layouts.partials._flash')
+
     <section class="section">
         <div class="container">
             <div class="content">

@@ -66,3 +66,10 @@ Route::post('/{file}/upload', 'Upload\UploadController@store')->name('upload.sto
 Route::delete('/{file}/upload/{upload}', 'Upload\UploadController@destroy')->name('upload.destroy');
 
 Route::get('/{file}', 'Files\FileController@show')->name('files.show');
+
+/**
+ * Checkout
+ */
+Route::prefix('/{file}/checkout')->namespace('Checkout')->group(function () {
+    Route::post('/free', 'CheckoutController@free')->name('checkout.free');
+});

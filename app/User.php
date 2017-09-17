@@ -74,4 +74,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(File::class);
     }
+
+    /**
+     * Relation to Sale.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

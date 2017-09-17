@@ -203,7 +203,7 @@ class File extends Model
      */
     public function isFree()
     {
-        return $this->price === 0;
+        return $this->price <= 0;
     }
 
     /**
@@ -275,6 +275,14 @@ class File extends Model
     }
 
     /**
+     * Calculate the commission for a given file.
+     */
+    public function calculateCommission()
+    {
+        return (config('filemarket.sales.commission') / 100) * $this->price;
+    }
+
+    /**
      * Relation to Upload.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -302,5 +310,15 @@ class File extends Model
     public function approvals()
     {
         return $this->hasMany(FileApproval::class);
+    }
+
+    /**
+     * Relation to Sale.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
     }
 }
