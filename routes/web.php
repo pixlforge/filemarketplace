@@ -73,3 +73,8 @@ Route::get('/{file}', 'Files\FileController@show')->name('files.show');
 Route::prefix('/{file}/checkout')->namespace('Checkout')->group(function () {
     Route::post('/free', 'CheckoutController@free')->name('checkout.free');
 });
+
+/**
+ * Download
+ */
+Route::get('/{file}/{sale}/download', 'Files\DownloadController@show')->name('files.download');

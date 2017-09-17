@@ -276,10 +276,31 @@ class File extends Model
 
     /**
      * Calculate the commission for a given file.
+     *
+     * @return float|int
      */
     public function calculateCommission()
     {
         return (config('filemarket.sales.commission') / 100) * $this->price;
+    }
+
+    /**
+     * Checks wether a file matches a sale.
+     *
+     * @param Sale $sale
+     */
+    public function matchesSale(Sale $sale)
+    {
+        return $this->sales->contains($sale);
+    }
+
+    /**
+     * Build a list of all uploads.
+     */
+    public function getUploadList()
+    {
+        return $this->uploads()->approved()->get()
+            ->pluck('path')->toArray();
     }
 
     /**

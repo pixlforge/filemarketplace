@@ -20,6 +20,14 @@ class Upload extends Model
     ];
 
     /**
+     * Build the full path.
+     */
+    public function getPathAttribute()
+    {
+        return storage_path("app/files/{$this->file->identifier}/{$this->filename}");
+    }
+
+    /**
      * Relation to File.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
