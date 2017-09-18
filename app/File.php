@@ -7,38 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * App\File
- *
- * @property-read \App\User $user
- * @mixin \Eloquent
- * @property int $id
- * @property string $identifier
- * @property int $user_id
- * @property string $title
- * @property string $overview_short
- * @property string $overview
- * @property float $price
- * @property int $live
- * @property int $approved
- * @property int $finished
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property string|null $deleted_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereApproved($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereFinished($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereIdentifier($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereLive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereOverview($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereOverviewShort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereUserId($value)
- */
 class File extends Model
 {
     use SoftDeletes, HasApprovals;

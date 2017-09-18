@@ -11,9 +11,18 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 /**
+ * Marketplace
+ */
+Route::prefix('/account/connect')->namespace('Account')->group(function () {
+    Route::get('/', 'MarketplaceConnectController@index')->name('account.connect');
+    Route::get('/complete', 'MarketplaceConnectController@store')->name('account.complete');
+});
+
+
+/**
  * Account
  */
-Route::prefix('/account')->namespace('Account')->middleware('auth')->group(function () {
+Route::prefix('/account')->namespace('Account')->middleware(['auth', 'needs.marketplace'])->group(function () {
     Route::get('/', 'AccountController@index')->name('account');
 
     /**
@@ -72,6 +81,7 @@ Route::get('/{file}', 'Files\FileController@show')->name('files.show');
  */
 Route::prefix('/{file}/checkout')->namespace('Checkout')->group(function () {
     Route::post('/free', 'CheckoutController@free')->name('checkout.free');
+    Route::post('/payment', 'CheckoutController@payment')->name('checkout.payment');
 });
 
 /**

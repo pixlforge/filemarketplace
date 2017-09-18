@@ -39,8 +39,6 @@ class CreateSale implements ShouldQueue
     {
         $sale = new Sale;
 
-        $this->file->price = 20;
-
         $sale->fill([
             'identifier' => uniqid(true),
             'buyer_email' => $this->email,

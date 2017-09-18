@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\AbortIfNotAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\RedirectIfMarketplaceConnected;
+use App\Http\Middleware\RedirectIfMarketplaceNotConnected;
 
 class Kernel extends HttpKernel
 {
@@ -58,6 +60,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => AbortIfNotAdmin::class
+        'admin' => AbortIfNotAdmin::class,
+        'needs.marketplace' => RedirectIfMarketplaceNotConnected::class,
+        'has.marketplace' => RedirectIfMarketplaceConnected::class,
     ];
 }
