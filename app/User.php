@@ -4,6 +4,7 @@ namespace App;
 
 use App\File;
 use App\Traits\Roles\HasRoles;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -35,6 +36,27 @@ class User extends Authenticatable
     ];
 
     /**
+     * Compute total sales for a user for a month.
+     */
+    public function saleValueThisMonth()
+    {
+        return $this->sales()->whereBetween('created_at', [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth(),
+        ])->get()->sum('sale_price');
+    }
+
+    /**
+     * Compute total sales for user.
+     *
+     * @return mixed
+     */
+    public function saleValueOverLifetime()
+    {
+        return $this->sales->sum('sale_price');
+    }
+
+    /**
      * Checks wether the authenticated user is an admin.
      *
      * @return bool
@@ -44,6 +66,12 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
+    /**
+     * Check if user is user.
+     *
+     * @param User $user
+     * @return bool
+     */
     public function isTheSameAs(User $user)
     {
         return $this->id === $user->id;

@@ -4,25 +4,25 @@
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Total files</p>
-                    <p class="title">0</p>
+                    <p class="title">{{ $fileCount }}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Total sales</p>
-                    <p class="title">0</p>
+                    <p class="title">{{ $saleCount }}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Commissions this month</p>
-                    <p class="title">0</p>
+                    <p class="title">CHF {{ number_format($thisMonthCommission, 2) }}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Commissions total</p>
-                    <p class="title">0</p>
+                    <p class="title">CHF {{ number_format($lifetimeCommission, 2) }}</p>
                 </div>
             </div>
         </div>
